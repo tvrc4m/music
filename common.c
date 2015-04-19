@@ -1,3 +1,4 @@
+
 #include "common.h"
 
 int start_with(char *src,char *start){
@@ -50,4 +51,36 @@ char *strrep(char *src,char *findstr,char *repstr){
 	}
 
 	return dest;
+}
+
+char **rand_array(char **array,int count){
+	int recursive=count*10;
+	while(recursive--){
+		srand(time(NULL)*recursive);
+		int f=rand()%count;
+		srand(time(NULL)*recursive*f);
+		int s=rand()%count;
+		char *temp=array[f];
+		array[f]=array[s];
+		array[s]=temp;
+	}
+	return array;
+}
+
+char **array_slice(char **array,int count,int length){
+	if(count<=length) return array;
+	char **newarray=(char**)calloc(sizeof(char*),length);
+	for(int i=0;i<length;i++){
+		newarray[i]=array[i];
+	}
+	return newarray;
+}
+
+void swap(void *v1,void *v2){
+	void *temp=v1;
+	printf("--%s\n", v1);
+	v1=v2;
+	v2=temp;
+	printf("--%s\n", v1);
+
 }

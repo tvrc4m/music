@@ -4,24 +4,18 @@
 extern int pm_rand;
 extern char *pm_filter;
 
-int rand_play(char **musics,int count,int length){
-	printf("%s\n", pm_filter);
-	node queue=rand_music(musics,count,length);
-	return play(queue);
-}
-
-int filter_play(char **musics,int count,const char *search){
-	node queue=filter_music(musics,count,search);
-	return play(queue);
-}
-
 int play(char **musics,int count){
 	char *path;
+	char *playlist[count];
 	node queue;
-	if(pm_filter==NULL){
+	if(pm_filter!=NULL){
 		queue=filter_music(musics,count,pm_filter);
+	}else{
+		char **list=array_slice(musics,count,10);
+		queue=padding_music(list,10);
+		free(list);
 	}
-	
+
 	while((path=node_pop(queue))!=NULL){
 		char afplay[255];
 		memset(afplay,sizeof(afplay),0);

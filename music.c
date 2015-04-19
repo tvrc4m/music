@@ -4,21 +4,6 @@
 #include "common.h"
 #include "play.h"
 
-static int read_music(char *path,read_dir_callback callback){
-	DIR *dir;
-	struct dirent *entry;
-	if((dir=opendir(path))==NULL){
-		perror("opendir");
-		exit(-1);
-	}
-	while((entry=readdir(dir))!=NULL){
-		callback(path,entry);
-	}
-	closedir(dir);
-	return 1;
-}
-
-
 int count_music(const char *dir_path){
 	static int count=0;
 	DIR *dir;
@@ -68,12 +53,10 @@ int init_music(char **musics,const char *dir_path){
 	return 0;
 }
 
-node rand_music(char **musics,int count,int length){
-	node queue=node_init("rand_music");
-	for (int i = 0; i < length; ++i){
-		srand(time(NULL)*i);
-		int seed=rand();
-		node_push(queue,musics[seed%count]);
+node padding_music(char **musics,int count){
+	node queue=node_init("padding music");
+	for(int i=1;i<count;i++){
+		node_push(queue,musics[i]);
 	}
 	return queue;
 }

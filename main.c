@@ -4,12 +4,12 @@
 int pm_rand=0;
 char *pm_filter=NULL;
 
-void foreach_argv(int argc,char *argv[]){
+void foreach_argv(int argc,const char *argv[]){
 	for (int i = 0; i < argc; ++i){
 		if(strcmp(argv[i],"-r")==0){
 			pm_rand=1;
-		}else if(strcmp(argv[i],"-s")){
-			pm_filter=argv[i];
+		}else if(strcmp(argv[i],"-s")==0){
+			pm_filter=(char *)argv[i+1];
 		}
 	}
 }
@@ -22,9 +22,11 @@ int main(int argc, char const *argv[]){
 	char *musics[count];
 	init_music(musics,MUSIC_PATH);
 
-	const char *command=argv[1];
+	char **list=rand_array(musics,count);
 
-	return paly();
+	foreach_argv(argc,argv);
+
+	return play(list,count);
 
 	return 0;	
 }
