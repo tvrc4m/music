@@ -14,7 +14,7 @@ int count_music(const char *dir_path){
 	}
 	while((entry=readdir(dir))!=NULL){
 		if(start_with(entry->d_name,".")!=0){
-			if(entry->d_type==8 && end_with(entry->d_name,".wav")==0){
+			if(entry->d_type==8 && (end_with(entry->d_name,".wav")==0 || end_with(entry->d_name,".mp3")==0 || end_with(entry->d_name,".m4a")==0)){
 				count+=1;
 			}else if(entry->d_type==4){
 				char *new_dir=(char*)calloc(sizeof(char),strlen(MUSIC_PATH)+strlen(entry->d_name));
@@ -37,7 +37,7 @@ int init_music(char **musics,const char *dir_path){
 	}
 	while((entry=readdir(dir))!=NULL){
 		if (start_with(entry->d_name,".")!=0){
-			if(entry->d_type==8 && end_with(entry->d_name,".wav")==0){
+			if(entry->d_type==8 && (end_with(entry->d_name,".wav")==0 || end_with(entry->d_name,".mp3")==0 || end_with(entry->d_name,".m4a")==0)){
 				cur+=1;
 				char *full_path=(char *)calloc(sizeof(char),strlen(dir_path)+1+strlen(entry->d_name));
 				sprintf(full_path,"%s/%s",dir_path,entry->d_name);
