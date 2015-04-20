@@ -3,6 +3,7 @@
 
 extern int pm_rand;
 extern char *pm_filter;
+extern int pm_length;
 
 int play(char **musics,int count){
 	char *path;
@@ -11,8 +12,8 @@ int play(char **musics,int count){
 	if(pm_filter!=NULL){
 		queue=filter_music(musics,count,pm_filter);
 	}else{
-		char **list=array_slice(musics,count,10);
-		queue=padding_music(list,10);
+		char **list=array_slice(musics,count,pm_length);
+		queue=padding_music(list,pm_length);
 		free(list);
 	}
 

@@ -55,7 +55,7 @@ int init_music(char **musics,const char *dir_path){
 
 node padding_music(char **musics,int count){
 	node queue=node_init("padding music");
-	for(int i=1;i<count;i++){
+	for(int i=0;i<count;i++){
 		node_push(queue,musics[i]);
 	}
 	return queue;
