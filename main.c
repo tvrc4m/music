@@ -1,3 +1,4 @@
+#include "unistd.h"
 #include "common.h"
 #include "play.h"
 
@@ -19,9 +20,24 @@ void foreach_argv(int argc,const char *argv[]){
 	}
 }
 
+void deamon(){
+	pid_t fpid=fork();
+	if(fpid!=0) exit(0);
+
+	fpid=setsid();
+	
+	if(fpid==-1){
+		printf("%s\n", "set session process failed");
+		exit(0);
+	}
+	fpid=fork();
+	if(fpid!=0) exit(0);
+}
+
 
 
 int main(int argc, char const *argv[]){
+	deamon();
 	// fetch_music_file();
 	int count=count_music(MUSIC_PATH);
 	char *musics[count];
